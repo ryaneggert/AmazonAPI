@@ -1,7 +1,8 @@
 import bottlenose
 import string
 
-StripDig = string.ascii_letters + '<>/'
+IsolateSalesRank = string.ascii_letters + '<>/'
+IsolateCategory = '<>/'
 amazon = bottlenose.Amazon(
     'AKIAI4I6EMMUJQXSGCFA', '/QTXbjXBMJk75UsOxNbAhRwkk0aVjPAKUla+ofaM',
     'ryane-20')
@@ -9,9 +10,16 @@ product = amazon.ItemLookup(
     ItemId='B0094KNESM', ResponseGroup='SalesRank,ItemAttributes')
 Response = str(product)
 
-SRpos = Response.find('</SalesRank>')
+SRPos = Response.find('</SalesRank>')
+CgPos = Response.find('</ProductGroup>')
 
-SR = Response[SRpos - 30:SRpos]
+SR = Response[SRPos - 30:SRPos]
 print SR
-SalesRank = SR.translate(None, StripDig)
+SalesRank = SR.translate(None, IsolateSalesRank)
 print SalesRank
+
+Cg = Response[CgPos - 40:CgPos]
+print Cg
+Cat = Cg.split(">")
+Category = Cat[-1]
+print Category
