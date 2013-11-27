@@ -26,7 +26,8 @@ def ASINLookup(ASIN, x, y):  # x is looping through ASINs. y for time
             if y == 1:  # Only find category the first time
                 CgPos = Response.find('</ProductGroup>')
 
-                if CgPos == -1:  # If the program didn't find a category in the XML
+                # If the program didn't find a category in the XML
+                if CgPos == -1:
                     Category = 'No Category Found'
                 else:
                     Cg = Response[CgPos - 40:CgPos]
@@ -34,15 +35,17 @@ def ASINLookup(ASIN, x, y):  # x is looping through ASINs. y for time
                     Category = Cat[-1]
                 print Category
                 Sheet.write(x + 1, 0, ASIN)  # Only write ASIN the first time
-                Sheet.write(x + 1, 1, Category)  # Only write category the first time
+                # Only write category the first time
+                Sheet.write(x + 1, 1, Category)
 
-            if SRPos == -1:  # If the program didn't find a sales rank in the XML
+            # If the program didn't find a sales rank in the XML
+            if SRPos == -1:
                 SalesRank = 'No Sales Rank Found'
             else:
                 SR = Response[SRPos - 30:SRPos]
                 SalesRank = SR.translate(None, IsolateSalesRank)
-                # strip all chars, except for digits, leaving only the SalesRank
-                # behind
+                # strip all chars, except for digits, leaving only the
+                # SalesRank behind
             print SalesRank
 
             try:
@@ -50,23 +53,22 @@ def ASINLookup(ASIN, x, y):  # x is looping through ASINs. y for time
             except ValueError:
                 Sheet.write(x + 1, 1 + y, SalesRank)
             break
-    else: #Multiple Attempts have failed
+    else:  # Multiple Attempts have failed
         print "Damn."
-        if y == 1:  # Only find category the first time        
+        if y == 1:  # Only find category the first time
             Sheet.write(x + 1, 0, ASIN)  # Only write ASIN the first time
-            Sheet.write(x + 1, 1, "Internet Error")  # Only write category the first time
+            # Only write category the first time
+            Sheet.write(x + 1, 1, "Internet Error")
         Sheet.write(x + 1, 1 + y, "Internet Error")
-
-
 
 
 OrigTime = time.strftime('%c %z', time.localtime())
 FileStart = time.strftime('%m%d_%H%M', time.localtime())
-ASINText = open('ASINTest.txt', 'r') 
+ASINText = open('ASINs.txt', 'r')
 
-D=ASINText.read()
-print D
-ASINs= D.split('\n')
+RwIn = ASINText.read()
+
+ASINs = RwIn.split('\n')
 
 
 wbk = xlwt.Workbook()
@@ -87,10 +89,11 @@ for j in range(1, 4):  # 11 is number of hours to check. First j always 1
         ASINLookup(ASINs[i - 1], i, j)
         print "Searching Product " + str(i) + " of " + str(len(ASINs))
         # time.sleep(.5)
-    wbk.save('AmazonSalesRankData' + FileStart + '.xls') 
+    wbk.save('AmazonSalesRankData' + FileStart + '.xls')
     eTf = time.clock()
     elapsedTime = eTf - eTs
     print 'Elapsed Time = ' + str(elapsedTime)
     if elapsedTime < 3600:
-        print "Finished Hour " + str(j) + " at " + str(time.strftime('%X %z', time.localtime()))
-        time.sleep(60-elapsedTime)
+        print("Finished Hour " + str(j) + " at " +
+              str(time.strftime('%X %z', time.localtime())))
+        time.sleep(3600 - elapsedTime)
