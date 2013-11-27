@@ -61,7 +61,7 @@ def ASINLookup(ASIN, x, y):  # x is looping through ASINs. y for time
 
 
 OrigTime = time.strftime('%c %z', time.localtime())
-
+FileStart = time.strftime('%m%d_%H%M', time.localtime())
 ASINText = open('ASINTest.txt', 'r') 
 
 D=ASINText.read()
@@ -78,14 +78,19 @@ Sheet.write(0, 1, "Category")
 IsolateSalesRank = string.ascii_letters + '<>/'
 IsolateCategory = '<>/'
 
-# ASINs = ['B003R248Q0', 'B002S53CN2', 'B005XLN97M', 'B003BLQEFA',
-#          'B004OFBJX4', 'B003S9VNWE', 'B007RDGJHG', 'B0002KZ4VI', 'B0038M5ILI']
 
 for j in range(1, 4):  # 11 is number of hours to check. First j always 1
     startTime = time.strftime('%c %z', time.localtime())
     Sheet.write(0, j + 1, "Sales Rank" + startTime)
+    eTs = time.clock()
     for i in range(1, len(ASINs) + 1):
         ASINLookup(ASINs[i - 1], i, j)
         print "Searching Product " + str(i) + " of " + str(len(ASINs))
         # time.sleep(.5)
-    wbk.save('AmazonSalesRankData.xls')  # ADD DATE TO FILENAME
+    wbk.save('AmazonSalesRankData' + FileStart + '.xls') 
+    eTf = time.clock()
+    elapsedTime = eTf - eTs
+    print 'Elapsed Time = ' + str(elapsedTime)
+    if elapsedTime < 3600:
+        print "Finished Hour " + str(j) + " at " + str(time.strftime('%X %z', time.localtime()))
+        time.sleep(60-elapsedTime)

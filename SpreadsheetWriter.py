@@ -44,9 +44,7 @@
 #     print
 #     print
 
-f = open('ASINTest.txt', 'r') 
+import time
+Bob= time.strftime('%m%d_%H%M', time.localtime())
 
-D=f.read()
-print D
-G= D.split('\n')
-print G 
+print "Go"+Bob+'.xls'
