@@ -40,7 +40,7 @@ def ASINLookup(ASIN, x, y):  # x is looping through ASINs. y for time
 
             # If the program didn't find a sales rank in the XML
             if SRPos == -1:
-                SalesRank = 'No Sales Rank Found'
+                SalesRank = 'Unranked'
             else:
                 SR = Response[SRPos - 30:SRPos]
                 SalesRank = SR.translate(None, IsolateSalesRank)
