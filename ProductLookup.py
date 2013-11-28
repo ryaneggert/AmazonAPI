@@ -64,7 +64,7 @@ def ASINLookup(ASIN, x, y):  # x is looping through ASINs. y for time
 
 OrigTime = time.strftime('%c %z', time.localtime())
 FileStart = time.strftime('%m%d_%H%M', time.localtime())
-ASINText = open('ASINs.txt', 'r')
+ASINText = open('ASINsFin.txt', 'r')
 
 RwIn = ASINText.read()
 
@@ -81,7 +81,7 @@ IsolateSalesRank = string.ascii_letters + '<>/'
 IsolateCategory = '<>/'
 
 
-for j in range(1, 4):  # 11 is number of hours to check. First j always 1
+for j in range(1, 37):  # 11 is number of hours to check. First j always 1
     startTime = time.strftime('%c %z', time.localtime())
     Sheet.write(0, j + 1, "Sales Rank" + startTime)
     eTs = time.clock()
