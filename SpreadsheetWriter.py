@@ -44,7 +44,20 @@
 #     print
 #     print
 
-import time
-Bob= time.strftime('%m%d_%H%M', time.localtime())
+# for x in xrange(1,10):
+#     print x
+#     print x * 6
 
-print "Go"+Bob+'.xls'
+import time
+
+StartT = time.clock()
+
+Listy= ['http://www.adorama.com/catalog.tpl?op=article_020705', 'http://www.adorama.com/catalog.tpl?op=article_022805', 'http://www.adorama.com/catalog.tpl?op=article_032805', 'http://www.adorama.com/catalog.tpl?op=article_041904', 'http://www.adorama.com/catalog.tpl?op=article_051704', 'http://www.adorama.com/catalog.tpl?op=article_052305', 'http://www.adorama.com/catalog.tpl?op=article_062104', 'http://www.adorama.com/catalog.tpl?op=article_071105', 'http://www.adorama.com/catalog.tpl?op=article_071204', 'http://www.adorama.com/catalog.tpl?op=article_090505', 'http://www.adorama.com/catalog.tpl?op=article_092605', 'http://www.adorama.com/catalog.tpl?op=article_101005', 'http://www.adorama.com/catalog.tpl?op=article_101705', 'http://www.adorama.com/catalog.tpl?op=article_102504', 'http://www.adorama.com/catalog.tpl?op=article_103105', 'http://www.adorama.com/catalog.tpl?op=article_112505', 'http://www.adorama.com/catalog.tpl?op=article_112805', 'http://www.adorama.com/catalog.tpl?op=article_122704']
+
+print len(Listy) 
+
+EndT = time.clock()
+
+Elapsed = EndT - StartT
+
+print Elapsed
