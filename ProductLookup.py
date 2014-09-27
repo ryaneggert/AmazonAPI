@@ -4,13 +4,12 @@ import bottlenose  # Amazon P.A. API bindings
 import string  # String containing ASCII letters
 import xlwt  # Write to MS Excel file
 import time  # Schedule data collection
-
+from authenticate import amznauth
 
 def ASINLookup(ASIN, x, y):  # x is looping through ASINs. y for time
     """Looks up a given ASIN. Uses given indices to place value(s)
     in an existing table"""
-    amazon = bottlenose.Amazon('AMAZON_ACCESS_KEY_ID',
-                               ' AMAZON_SECRET_KEY', 'AMAZON_ASSOC_TAG')
+    amazon = bottlenose.Amazon(amznauth['akeyAccess'], amznauth['akeySecret'], amznauth['atagAssoc'])
 
     # Rapid requests periodically fail. Code reattempts failed requests a set
     # number of times. This number has been tested, and it minimizes the number
@@ -69,7 +68,7 @@ def ASINLookup(ASIN, x, y):  # x is looping through ASINs. y for time
 
 # Use time to dynamically name file--prevent overwrite
 FileStart = time.strftime('%m%d_%H%M', time.localtime())
-ASINText = open('ASINsFin.txt', 'r')  # Open text 'list' of products to lookup
+ASINText = open('ASINs.txt', 'r')  # Open text 'list' of products to lookup
 
 RwIn = ASINText.read()  # Raw Input
 

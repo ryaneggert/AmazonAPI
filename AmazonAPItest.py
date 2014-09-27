@@ -1,11 +1,13 @@
-import bottlenose
-import string
+import bottlenose, string
+from authenticate import amznauth
 
 IsolateSalesRank = string.ascii_letters + '<>/'
 IsolateCategory = '<>/'
-# amazon = bottlenose.Amazon() Replace
-product = amazon.ItemLookup(
-    ItemId='B003S9VNWE', ResponseGroup='Large')
+amazon = bottlenose.Amazon(amznauth['akeyAccess'], amznauth['akeySecret'], amznauth['atagAssoc'])
+
+
+
+product = amazon.ItemLookup(ItemId='B003S9VNWE', ResponseGroup='Large')
 Response = str(product)
 SRPos = Response.find('</SalesRank>')
 CgPos = Response.find('</ProductGroup>')

@@ -215,7 +215,7 @@ pip-log.txt
 .mr.developer.cfg
 
 #############
-## Authentication Files
+## Authentication & Data Files
 #############
 
 /authenticate.py
